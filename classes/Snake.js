@@ -3,10 +3,10 @@ export class Snake {
     constructor() {
         this.snakeParticals = 
         [{
-            x: 24,
-            y: 24,
+            x: 25,
+            y: 25,
         }]
-        this.direction = constants[Math.floor(Math.random() * 4)]
+        this.direction = constants.inputs[Math.floor(Math.random() * 4)]
         window.addEventListener("keydown", this.onKeyPress.bind(this));
     }
     move(){
@@ -19,7 +19,7 @@ export class Snake {
        
     }
     onKeyPress(event)  {
-       const newDirection = constants.find(c => c.keyCode === event.keyCode)
+       const newDirection = constants.inputs.find(c => c.keyCode === event.keyCode)
        if(newDirection){
         return this.direction.oppositeDirection !== newDirection.direction ?
         this.direction = newDirection : null

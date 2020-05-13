@@ -15,7 +15,7 @@ export class Game {
     this.Snake = new Snake()
     this.FoodVendor = new FoodVendor()
     this.FoodVendor.placeFood(this.Snake.getSnakeBody())
-    this.GameArea.drawFood(this.FoodVendor.getFoodPlaces())
+  //  this.GameArea.drawCell(this.FoodVendor.getFoodPlaces(), "food")
     this.nextTick()
     }
     nextTick() {
@@ -36,6 +36,7 @@ export class Game {
         this.Snake.move()
         if(this.Snake.hitedTheWall() || this.Snake.eatedTail()) {
             this.playing = false
+            alert('Game Over')
             return null
         }
        
@@ -46,11 +47,12 @@ export class Game {
         this.incrementScore()
         this.interval = this.interval - this.step
         }
-      
-        this.GameArea.drawSnake(this.Snake.getSnakeBody())
-        this.GameArea.drawFood(this.FoodVendor.getFoodPlaces())
+        this.GameArea.clear()
+        this.GameArea.drawCells(this.Snake.getSnakeBody(), "snake")
+        this.GameArea.drawCells(this.FoodVendor.getFoodPlaces(), "food")
+
+    
     
     }
-
 }
 

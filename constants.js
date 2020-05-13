@@ -1,4 +1,4 @@
-export default [
+export default {inputs:[
     {
       direction: "left",
       oppositeDirection: "right",
@@ -35,4 +35,27 @@ export default [
         y: 1
       }
     }
-  ];
+  ],
+gameArea: {
+  size: {
+    x:50,
+    y:50
+  },
+  cellSize: 8,
+  
+  cellColors:{
+    snake: "black",
+    food: "#FF0000"
+  }
+
+},
+Food: {
+  foodAmount:15
+},
+Snake: {
+  position: {
+    x: 25,
+    y: 25
+  }
+}
+}
