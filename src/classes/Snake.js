@@ -1,12 +1,11 @@
 import constants from '../constants';
-import {getRandomInt} from '../../utils/getRandomInt'
+
 export class Snake {
-  constructor() {
+  constructor(direction) {
     // Set initial snake position
     this.snakeParticals = [constants.snake.position];
     // Set random initial direction
-    this.direction = constants.inputs[getRandomInt(0, 3)];
-    window.addEventListener('keydown', this.onKeyPress.bind(this));
+    this.direction = direction
   }
   // Move snake by adding new head element and delating extra particle
   move() {
@@ -17,18 +16,7 @@ export class Snake {
     this.snakeParticals.unshift(newHeadCell);
     this.snakeParticals.pop();
   }
-  // Input controller
-  onKeyPress(event) {
-    const newDirection = constants.inputs.find(
-      (input) => input.keyCode === event.keyCode
-    );
-    // Check if input is available
-    if (newDirection) {
-      return this.direction.oppositeDirection !== newDirection.direction
-        ? (this.direction = newDirection)
-        : null;
-    }
-  }
+ 
   // Add particle to snake array
   addParticle(position) {
     this.snakeParticals.push(position);
@@ -42,6 +30,18 @@ export class Snake {
       this.getSnakeHead().y >= constants.gameArea.size
     ) {
       return true;
+    }
+  }
+   // Check if food been eated and if so delate this food from array and return eated cell cord's
+   eatFood(foodArray) {
+    const index = foodArray.findIndex(
+      (foodElem) => foodElem.x === this.getSnakeHead().x && foodElem.y === this.getSnakeHead().y
+    );
+    if (index === -1) {
+      return false;
+    } else {
+      this.addParticle(this.getSnakeHead())
+      return index;
     }
   }
   // Check if snake eated tail and return boolean
@@ -62,6 +62,9 @@ export class Snake {
     } else {
       return false;
     }
+  }
+  setDirection(direction){
+    this.direction = direction
   }
   getSnakeHead() {
     return this.snakeParticals[0];

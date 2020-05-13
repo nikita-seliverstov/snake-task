@@ -2,6 +2,7 @@ import { GameArea } from './GameArea';
 import { Snake } from './Snake';
 import { FoodVendor } from './FoodVendor';
 import constants from '../constants';
+import {getRandomInt} from '../../utils/getRandomInt'
 export class Game {
   constructor(canvasRef, incrementScore, gameOverModal) {
     this.canvas = canvasRef;
@@ -10,11 +11,14 @@ export class Game {
     this.tick = null;
     this.playing = true;
     this.incrementScore = incrementScore;
+    this.direction =  constants.inputs[getRandomInt(0, 3)];
+    this.newDirection = null
+    window.addEventListener('keydown', this.onKeyPress.bind(this));
   }
   // Game initialization 
   start() {
     this.GameArea = new GameArea(this.canvas);
-    this.Snake = new Snake();
+    this.Snake = new Snake(this.direction);
     this.FoodVendor = new FoodVendor();
     this.FoodVendor.placeFood(this.Snake.getSnake());
     this.nextTick();
@@ -26,12 +30,12 @@ export class Game {
       return null;
     }
     this.tick = setTimeout(() => {
-      this.tick = null;
+      this.tick = null
       this.update();
       this.nextTick();
     }, this.interval);
   }
- 
+ // Prevent memory leak
   clearTick() {
     this.tick && clearTimeout(this.tick);
   }
@@ -42,19 +46,39 @@ export class Game {
         ? this.interval - constants.game.step
         : constants.game.minInterval;
   }
+   // Input controller
+   onKeyPress(event) {
+     console.log(this.direction)
+    const newInput = constants.inputs.find(
+      (input) => input.keyCode === event.keyCode
+    );
+    // Check if input is available
+    if (newInput) {
+      return this.direction.oppositeDirection !== newInput.direction
+        ? (this.newDirection = newInput)
+        : null;
+    }
+  }
   // Game logic
   update() {
+    // Update direction only during tick to unexpected behavior
+    if(this.newDirection) {
+      this.direction = this.newDirection
+    }
+    this.Snake.setDirection(this.direction)
     this.Snake.move();
     // Check if game lose condition true and if so stop the game
     if (this.Snake.hitedTheWall() || this.Snake.eatedTail()) {
+    
       this.playing = false;
       this.gameOverModal.showModal();
+     
       return null;
     }
     // Check if cell been eated by snake if so add particle, increment scrore and speed up the game
-    const eatedCell = this.FoodVendor.eatFood(this.Snake.getSnakeHead());
+    const eatedCell = this.Snake.eatFood(this.FoodVendor.getFoodPlaces());
     if (eatedCell) {
-      this.Snake.addParticle(eatedCell);
+      this.FoodVendor.removeFood(eatedCell)
       this.FoodVendor.placeFood(this.Snake.getSnake());
       this.incrementScore();
       this.speedUpGame();

@@ -25,19 +25,10 @@ export class FoodVendor {
       return position;
     }
   }
-  // Check if food been eated and if so delate this food from array and return eated cell cord's
-  eatFood(position) {
-    const index = this.food.findIndex(
-      (foodElem) => foodElem.x === position.x && foodElem.y === position.y
-    );
-    if (index === -1) {
-      return false;
-    } else {
-      this.food.splice(index, 1);
-      return position;
-    }
-  }
   getFoodPlaces() {
     return this.food;
+  }
+  removeFood(index){
+    this.food.splice(index, 1);
   }
 }
