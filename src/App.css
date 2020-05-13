@@ -14,3 +14,6 @@ canvas {
 h1 {
   margin-bottom: 3.5rem;
 }
+.dialog-menu {
+  padding-inline-start: 0;
+}
