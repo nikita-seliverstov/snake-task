@@ -1,5 +1,6 @@
 # snake-task
-
+## Demo
+https://sad-goldwasser-a2984d.netlify.app/
 ## Project setup
 ```
 npm install
