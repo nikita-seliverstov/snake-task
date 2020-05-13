@@ -1,18 +1,18 @@
-<template v-on:keyup="">
+<template>
   <div id="app">
     <h1>Snake</h1>
     <div>
       <canvas
         ref="canvas"
         id="snake-canvas"
-        :width="400"
-        :height="400"
+        :width=boardSize
+        :height=boardSize
       ></canvas>
       <p>Score:{{ score }}</p>
     </div>
     <section>
       <dialog
-        ref="dialog"
+        ref="gameOverModal"
         class="nes-dialog is-dark is-rounded"
         id="dialog-dark-rounded"
       >
@@ -31,11 +31,13 @@
 
 <script>
 import { Game } from './classes/Game.js';
+import constants from './constants';
 export default {
   name: 'App',
   data: function() {
     return {
       score: 0,
+      boardSize: constants.gameArea.cellSize *constants.gameArea.size
     };
   },
   methods: {
@@ -47,7 +49,7 @@ export default {
       new Game(
         this.$refs.canvas,
         this.incrementScore.bind(this),
-        this.$refs.dialog
+        this.$refs.gameOverModal
       ).start();
     },
   },
