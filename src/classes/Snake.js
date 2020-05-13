@@ -1,10 +1,11 @@
 import constants from '../constants';
+import {getRandomInt} from '../../utils/getRandomInt'
 export class Snake {
   constructor() {
     // Set initial snake position
     this.snakeParticals = [constants.snake.position];
     // Set random initial direction
-    this.direction = constants.inputs[Math.floor(Math.random() * 4)];
+    this.direction = constants.inputs[getRandomInt(0, 3)];
     window.addEventListener('keydown', this.onKeyPress.bind(this));
   }
   // Move snake by adding new head element and delating extra particle
