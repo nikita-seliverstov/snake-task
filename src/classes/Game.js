@@ -61,7 +61,7 @@ export class Game {
   }
   // Game logic
   update() {
-    // Update direction only during tick to unexpected behavior
+    // Update direction only during tick to prevent unexpected behavior
     if(this.newDirection) {
       this.direction = this.newDirection
     }
