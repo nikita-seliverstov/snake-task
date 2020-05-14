@@ -28,7 +28,9 @@ export class FoodVendor {
   getFoodPlaces() {
     return this.food;
   }
-  removeFood(index){
+  removeEatedFood(snakeHead){
+    const index = this.getFoodPlaces().findIndex(
+      (foodElem) => foodElem.x === snakeHead.x && foodElem.y === snakeHead.y)
     this.food.splice(index, 1);
   }
 }

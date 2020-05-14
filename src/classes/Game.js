@@ -48,7 +48,7 @@ export class Game {
   }
    // Input controller
    onKeyPress(event) {
-     console.log(this.direction)
+    
     const newInput = constants.inputs.find(
       (input) => input.keyCode === event.keyCode
     );
@@ -68,17 +68,18 @@ export class Game {
     this.Snake.setDirection(this.direction)
     this.Snake.move();
     // Check if game lose condition true and if so stop the game
-    if (this.Snake.hitedTheWall() || this.Snake.eatedTail()) {
+    if (this.Snake.hitTheWall() || this.Snake.eatedTail()) {
     
       this.playing = false;
       this.gameOverModal.showModal();
      
       return null;
     }
-    // Check if cell been eated by snake if so add particle, increment scrore and speed up the game
-    const eatedCell = this.Snake.eatFood(this.FoodVendor.getFoodPlaces());
-    if (eatedCell) {
-      this.FoodVendor.removeFood(eatedCell)
+    // Check if food has been eaten by snake if so add particle, increment scrore and speed up the game
+    if(this.Snake.snakeHeadIsInFood(this.FoodVendor.getFoodPlaces()))
+    {
+      this.Snake.eatFood();
+      this.FoodVendor.removeEatedFood(this.Snake.getSnakeHead())
       this.FoodVendor.placeFood(this.Snake.getSnake());
       this.incrementScore();
       this.speedUpGame();

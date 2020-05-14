@@ -1,7 +1,7 @@
 export default {
   game: {
     initialSpeed: 300,
-    step: 30,
+    step: 15,
     minInterval: 30,
   },
   gameArea: {
@@ -13,7 +13,7 @@ export default {
     },
   },
   food: {
-    foodAmount: 15,
+    foodAmount: 10,
   },
   snake: {
     position: {

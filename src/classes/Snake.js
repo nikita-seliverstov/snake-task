@@ -22,7 +22,7 @@ export class Snake {
     this.snakeParticals.push(position);
   }
   // Check if snake hited the wall and return boolean
-  hitedTheWall() {
+  hitTheWall() {
     if (
       this.getSnakeHead().x < 0 ||
       this.getSnakeHead().y < 0 ||
@@ -32,17 +32,20 @@ export class Snake {
       return true;
     }
   }
-   // Check if food been eated and if so delate this food from array and return eated cell cord's
-   eatFood(foodArray) {
-    const index = foodArray.findIndex(
-      (foodElem) => foodElem.x === this.getSnakeHead().x && foodElem.y === this.getSnakeHead().y
-    );
-    if (index === -1) {
-      return false;
-    } else {
+   // Check if food has been eated and if so delate this food from array and return eated cell cord's
+   eatFood() {
       this.addParticle(this.getSnakeHead())
-      return index;
     }
+  
+  snakeHeadIsInFood(foodArray) {
+    const index = foodArray.findIndex(
+      (foodElem) => foodElem.x === this.getSnakeHead().x && foodElem.y === this.getSnakeHead().y)
+      if (index === -1) {
+        return false;
+      }
+      else {
+        return true;
+      }
   }
   // Check if snake eated tail and return boolean
   eatedTail() {
