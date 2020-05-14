@@ -10,7 +10,7 @@ export class FoodVendor {
       this.food.push(this.foodPosition(snakeBody));
     }
   }
-  // Detirmine food position by random int's and exclude unavaible cordinates
+  // Determine food position by random int's and exclude unavaible cordinates
   foodPosition(snakeBody) {
     const position = {
       x: getRandomInt(0, constants.gameArea.size -1),

@@ -30,7 +30,6 @@ export class Game {
       return null;
     }
     this.tick = setTimeout(() => {
-      this.tick = null
       this.update();
       this.nextTick();
     }, this.interval);
